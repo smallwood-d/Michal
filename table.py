@@ -23,12 +23,13 @@ class Table:
             if i % 10 == 0:
                 print(i)
             curr_value = self.worksheet.cell(i,self.compound_cell.col).value
-            print("curr_value", curr_value)
+            
             if curr_value:
-                new_name = Table.getInfoPubChem(curr_value)
-                if new_name and new_name[0][1]:
-                    self.worksheet.cell(i,self.Ki.col).value = new_name[0][1]
-                    print(new_name[0][0], new_name[0][1])
+                Table.getInfo(curr_value)
+                # new_name = Table.getInfoPubChem(curr_value)
+                # if new_name and new_name[0][1]:
+                #     self.worksheet.cell(i,self.Ki.col).value = new_name[0][1]
+                #     print(new_name[0][0], new_name[0][1])
 
     @classmethod
     def find_compound_cells(cls, worksheet: worksheet):
@@ -53,6 +54,6 @@ class Table:
             return nist_get_compounds(name)
 
     @staticmethod
-    def getInfo(name):
-        Table.getInfoNIST(name)
-        Table.getInfoPubChem(name)
+    def getInfo(name: str) -> None:
+        print(Table.getInfoNIST(name))
+        print(Table.getInfoPubChem(name))

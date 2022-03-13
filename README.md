@@ -6,11 +6,14 @@
 
 ## installation
 ```bash
-pip install -r /path/to/requirements.txt
-python main.py
+> pip install -r /path/to/requirements.txt
 ```
 
-arguments:
+## run
+```bash
+python main.py
+```
+### arguments
   - **-h, --help**            show the help message  
   - **-c COMPOUND [COMPOUND ...], --compound COMPOUND [COMPOUND ...]**
                         a list or a single compound to collect data from PubChem and NIST  
@@ -19,3 +22,8 @@ arguments:
   - **-o OUT, --out OUT**     xlsx workbook output path  
                         path to the **output** xlsx workbook
 
+### examples 
+```bash
+> python main.py -c ethanol
+> python main.py  --workbook ./resources/example.xlsx 
+```
