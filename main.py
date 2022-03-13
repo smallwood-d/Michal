@@ -1,44 +1,30 @@
+from os import path
+import argparse
+from datetime import datetime
 from openpyxl import load_workbook
 
-from os import path
 from table import Table
 
-import logging
-logging.basicConfig(format=logging.BASIC_FORMAT)
-logger = logging.getLogger('main')
-
-import argparse
-
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('-c', '--compound', type=str, nargs='+',
-                    help='an integer for the accumulator')
-parser.add_argument('--workbook', action='store_const', type=str,
+parser = argparse.ArgumentParser(prog='Michal', description='Process some compounds.')
+parser.add_argument('-c', '--compound', nargs='+',
+                    help='compound or compounds name')
+parser.add_argument('--workbook',
                     help='xlsx workbook path')
-parser.add_argument('-o', '--out', action='store_const', type=str,
+parser.add_argument('-o', '--out',
                     help='xlsx workbook output path')
 
 args = parser.parse_args()
-print(args)
 
-wb = load_workbook(filename = path.join('.','resources', 'example.xlsx'))
-print(wb.sheetnames)
-ws = wb['מרוכז חדש']
-
-c = ws.cell(12,2)
-
-print(c.value)
-print(ws.max_column)
-for t in Table.find_compound_cells(ws):
-    t.fill_table()
-    break
-
-# wb.save(path.join('.','resources', 'example1.xlsx'))
-
-
-
-# Save the file
-#wb.save("sample.xlsx")
-
-
-
-# print(getRealNamePubChem('Bicyclo[2.2.1]heptane, 7,7-dimethyl-2-methylene-'))
+if args.compound:
+    for compound in args.compound:
+        print(f'PubChem, {compound} => {Table.getInfoPubChem(compound)}')
+        print(f'Nist, {compound} => {Table.getInfoNIST(compound)}')
+elif args.workbook:
+    output_path = args.out or path.join(path.dirname(args.workbook),f"""{datetime.now().strftime('%d%H%M%S')}.xlsx""")
+    wb = load_workbook(filename = args.workbook)
+    print(wb.sheetnames)
+    ws = wb['מרוכז חדש']
+    wb.save(output_path)
+    # TODO
+else:
+    parser.print_usage()
