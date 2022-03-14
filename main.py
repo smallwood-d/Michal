@@ -26,7 +26,8 @@ elif args.workbook:
     ws = wb['מרוכז חדש']
     for t in Table.find_compound_cells(ws):
         t.fill_table()
-    # wb.save(output_path)
+        break
+    wb.save(output_path)
     # TODO
 else:
     parser.print_usage()

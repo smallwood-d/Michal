@@ -35,7 +35,8 @@ class NIST:
         sub = soup.select_one("li sub") # collect the sub tag - assume there is only one sub tag in the url - formula
         if sub:
             formulaReg = re.search("Formula:\s(?P<formula>\w+)",sub.parent.get_text())
-            formula = formulaReg.group('formula')
+            if formulaReg:
+                formula = formulaReg.group('formula')
         return formula
 
     def __get_table(self, nist_page_source: bytes) -> list[tuple[str, float]]:

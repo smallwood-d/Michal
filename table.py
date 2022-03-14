@@ -26,10 +26,9 @@ class Table:
             
             if curr_value:
                 Table.getInfo(curr_value)
-                # new_name = Table.getInfoPubChem(curr_value)
-                # if new_name and new_name[0][1]:
-                #     self.worksheet.cell(i,self.Ki.col).value = new_name[0][1]
-                #     print(new_name[0][0], new_name[0][1])
+                new_name = Table.getInfoPubChem(curr_value)
+                if new_name and new_name[0][0]:
+                    self.worksheet.cell(i,self.formula.col).value = new_name[0][0]
 
     @classmethod
     def find_compound_cells(cls, worksheet: worksheet):
